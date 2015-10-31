@@ -1,7 +1,19 @@
+<script type="text/javascript">
+function edit(){
+	alert ("Edit");
+}
+function delete(){
+	alert("delete");
 
+}
+
+function details(){
+	alert("details");
+}
+
+</script>
 <div class="span9" id="content">
     <div class="row-fluid">
-        
 
 <?php
 switch ($category) {
@@ -47,14 +59,15 @@ switch ($category) {
 			        		<?php if($project!=NULL):?>
 							<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 								<tr>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Name</a></th>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">URL</a></th>
+									<th class="table-header-repeat line-left"><a href="">Project Name</a></th>
+									<th class="table-header-repeat line-left"><a href="">URL</a></th>
 									<th class="table-header-repeat line-left"><a href="">Status</a></th>
 									<th class="table-header-repeat line-left"><a href="">Completion</a></th>
 									<th class="table-header-options line-left"><a href="">Options</a></th>
 								</tr>
 								
 								<?php 
+								// && $project['teamleader'] as $team
 									foreach ($project as $row) {
 										echo '<tr>';
 										echo '<td>'.$row->name.'</td>';
@@ -62,10 +75,11 @@ switch ($category) {
 										echo '<td>'.$row->status.'</td>';
 										echo '<td>'.$row->completion.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit/?id='.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="editProject/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="deleteProject/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
+										echo "</tr>";
 										echo "</tr>";
 			                                                               
 									}
@@ -82,7 +96,14 @@ switch ($category) {
 	<?php break;
 	
 	case 'employee_list':
-	case 'teamleader_list': ?>
+	case 'teamleader_list': 
+	if($category=="teamleader_list")
+			$name = "Teamleader";
+		else
+			$name = "Employee";
+		//echo $name;
+		?>
+
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<?php if($category=='employee_list'){?>
@@ -137,9 +158,9 @@ switch ($category) {
 										echo '<td>'.$row->address.'</td>';
 										echo '<td>'.$row->phone.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit/?id='.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="edit'.$name.'/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="delete'.$name.'/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -156,7 +177,12 @@ switch ($category) {
 	break;
 
 	case 'search_employee':
-	case 'search_teamleader':?>
+	case 'search_teamleader':
+		if($category=="search_teamleader")
+			$name = "Teamleader";
+		else
+			$name = "Employee";
+		?>
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<h4>Employee</h4>
@@ -198,13 +224,14 @@ switch ($category) {
 								<?php 
 									foreach ($employee as $row) {
 										echo '<tr>';
+										echo $name;		
 										echo '<td>'.$row->name.'</td>';
 										echo '<td>'.$row->address.'</td>';
 										echo '<td>'.$row->phone.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit/?id='.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="edit'.$name.'/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="delete'.$name.'/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -329,9 +356,8 @@ switch ($category) {
 										echo '<td>'.$row->issuer.'</td>';
 										echo '<td>'.$row->project.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit/?id='.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="deleteTicket/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsTicket/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -394,9 +420,9 @@ switch ($category) {
 										echo '<td>'.$row->body.'</td>';
 										echo '<td>'.$row->name.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit/?id='.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="editNote/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="deleteNote/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsNote/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               

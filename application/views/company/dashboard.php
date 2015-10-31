@@ -56,11 +56,12 @@
                                 ?>
                                     <div class="span4">
                                     <h4><?php echo $pro->name ?></h4>
-                                    <div class="progress progress-striped progress-success active">
+                                    <div class="progress">
+                                        <div class="bar" style="width: <?php echo $pro->completion;?>%;"></div>
                                         <div class="progress-bar" style="height:15px; width: 50%;"></div>
                                     </div>
                                     <h5>Completed: <?php echo $pro->completion?>%</h5>
-                                    <h5>Remaining: <?php echo 100-$pro->completion;?>%</h5>
+                                    
                                 </div>
                                 <?php }
                                 }

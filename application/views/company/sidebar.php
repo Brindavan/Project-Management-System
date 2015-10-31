@@ -7,13 +7,14 @@
                         </li>
 
                         
-                            <?php 
+                            <?php
+                                
                                 foreach ($sidebar_menu as $key) {
                                   echo '<li>';
 
                                         $key_without_space = str_replace(" ","-",$key);
-                                        $value = 'employee/employee-list';
-                                        echo anchor('company/'.strtolower($key_without_space), $key);
+                                        
+                                        echo anchor('company/add_new', $key);
 
                                         
                                         //echo $key;

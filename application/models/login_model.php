@@ -22,7 +22,7 @@ class Login_model extends CI_Model
 					'password'	=> $row->password
 				);
 		}
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		$this->session->set_userdata('session_data',$session_data);
 
 		return $query->result();

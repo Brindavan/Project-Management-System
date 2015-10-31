@@ -378,3 +378,7 @@ a:hover.icon-5  {
   line-height: 20px;
   margin: 0;
   }
+
+  .inputClass{
+    height: 30px;
+  }

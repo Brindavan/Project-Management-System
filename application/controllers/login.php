@@ -1,3 +1,4 @@
+
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -17,7 +18,7 @@ class Login extends CI_Controller {
 
 	public function user(){
 		//echo 'chceking';
-		echo $this->session->userdata('item');
+		//echo $this->session->userdata('item');
 		$login = array(
 		'username'		=> $this->input->post('username'),
 		'password'		=> md5($this->input->post('password')),
@@ -69,7 +70,11 @@ class Login extends CI_Controller {
 						break;
 
 					case 'teamleader':
-						echo 'Teamleader';
+						//echo 'Teamleader';
+						$this->load->view('teamleader/header');
+						$this->load->view('teamleader/sidebar');
+						$this->load->view('teamleader/dashboard');
+						$this->load->view('teamleader/footer');
 						break;	
 					
 					default:

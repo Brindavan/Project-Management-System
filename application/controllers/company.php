@@ -13,7 +13,7 @@ class Company extends CI_Controller
 	}
 	
 	public function header(){
-		$data['sidebar_menu']=array('New', 'Update', 'Remove');
+		$data['sidebar_menu']=array('New');
 		$this->load->view('company/header');
 		$this->load->view('company/sidebar',$data);
 	}
@@ -59,7 +59,7 @@ class Company extends CI_Controller
 		$this->footer();	
 	}
 
-	public function team_leader_list(){
+	public function teamleader_list(){
 		$this->load->model('company_model');
 		$data['employee'] = $this->company_model->getAllTeamLeader();
 		$this->header();
@@ -185,6 +185,368 @@ class Company extends CI_Controller
 		$this->footer();
 	}
 
+
+	public function add_new(){
+
+
+	$prev =  $_SERVER['HTTP_REFERER'];
+	$data['from'] = substr($prev, strrpos($prev, '/') + 1);
+	//echo $data['from'];
+	$this->header();
+	$this->load->model('company_model');
+	switch ($data['from']) {
+		case 'project_list':
+		case 'project_search':
+			$data['teamleader'] = $this->company_model->getAllTeamLeader();
+			$this->load->view('company/new',$data);
+		break;
+		case 'employee_list':
+		case 'employee_search':
+			$this->load->view('company/new',$data);
+		 break;
+		
+		case 'teamleader_list':
+		case 'teamleader_search':
+			$this->load->view('company/new',$data);
+		 break;
+
+		case 'view_note':
+			$data['project_list'] = $this->company_model->getAllProject();
+
+			$this->load->view('company/new',$data);
+		 break;
+
+
+		default:
+			# code...
+			break;
+	}
+
 	
+	$this->footer();
+
+	/*
+	project_list
+	project_search
+
+	employee_list
+	employee_search
+
+	teamleader_list
+	teamleader_search
+
+	view_note
+	*/
+
+	}
+
+	public function create_project(){
+		/*echo $this->input->post('project_name').'<br>';
+		echo $this->input->post('completion_date').'<br>';
+		echo $this->input->post('location').'<br>';
+		echo $this->input->post('teamleader').'<br>';
+		*/
+		$project = array(
+					'id'				=> NULL,
+					'company_id'		=> $this->session->session_data['user_id'],
+					'name'				=> $this->input->post('project_name'),
+					'start_date'		=> date("Y-m-d")." ".date("H:i:s"),
+					'finish_date'		=> $this->input->post('completion_date'),
+					'actual_finish_date'=> NULL,
+					'url'				=> $this->input->post('location'),
+					'completion'		=> 0,
+					'status'			=> 'ongoing',
+			);
+		$this->load->model('company_model');
+		$this->company_model->new_project($project);
+		$param['teamleader']	= $this->input->post('teamleader');
+		$param['project_name']  = $project['name'];
+ 		$this->project_link($param);
+ 		
+ 		redirect('/company/project_list/', 'refresh');
+		
+	}
+
+	public function add_Employee(){
+		/*echo $this->input->post('project_name').'<br>';
+		echo $this->input->post('completion_date').'<br>';
+		echo $this->input->post('location').'<br>';
+		echo $this->input->post('teamleader').'<br>';
+		*/
+		$employee = array(
+					'id'				=> NULL,
+					'company_id'		=> $this->session->session_data['user_id'],
+					'name'				=> $this->input->post('employee_name'),
+					'address'			=> $this->input->post('address'),
+					'phone'				=> $this->input->post('phone')
+			);
+		$this->load->model('company_model');
+		$this->company_model->new_employee($employee);
+		
+ 		redirect('/company/employee_list/', 'refresh');
+		
+	}
+
+	public function add_TeamLeader(){
+		/*echo $this->input->post('project_name').'<br>';
+		echo $this->input->post('completion_date').'<br>';
+		echo $this->input->post('location').'<br>';
+		echo $this->input->post('teamleader').'<br>';
+		*/
+		$teamleader = array(
+					'id'				=> NULL,
+					'company_id'		=> $this->session->session_data['user_id'],
+					'name'				=> $this->input->post('teamleader_name'),
+					'address'			=> $this->input->post('address'),
+					'phone'				=> $this->input->post('phone')
+			);
+		$this->load->model('company_model');
+		$this->company_model->new_teamleader($teamleader);
+		
+ 		redirect('/company/teamleader_list/', 'refresh');
+		
+	}
+
+	public function add_note(){
+		/*echo $this->input->post('project_name').'<br>';
+		echo $this->input->post('completion_date').'<br>';
+		echo $this->input->post('location').'<br>';
+		echo $this->input->post('teamleader').'<br>';
+		*/
+		
+		$this->load->model('company_model');
+		$pro_id = $this->company_model->getProjectId($this->input->post('project_list'));
+		//$param['teamleader']	= $this->input->post('teamleader');
+		//$param['project_name']  = $project['name'];
+ 		//$this->project_link($param);
+		foreach ($pro_id as $row) {
+				# code...
+				$id = $row->id;
+		}
+ 		
+		$note = array(
+					'id'				=> NULL,
+					'title'				=> $this->input->post('title'),
+					'body'				=> $this->input->post('body'),
+					'sender'			=> $this->session->session_data['user_id'],
+					'project_id'		=> $id,
+			);
+		
+		$this->company_model->new_note($note);
+		
+ 		redirect('/company/view_note/', 'refresh');
+		
+	}
+	
+	public function project_link($param){
+	
+		if($param['teamleader']!='name'){
+			$this->load->model('company_model');
+			$pro_id = $this->company_model->getProjectId($param['project_name']);
+			$team_id = $this->company_model->getTeamleaderId($param['teamleader']);
+			foreach ($pro_id as $row) {
+				# code...
+				$project_id = $row->id;
+			}
+			foreach ($team_id as $row) {
+				# code...
+				$teamleader_id = $row->id;
+			}
+
+			$project_link = array(
+					'id'			=> NULL,
+					'project_id'	=> $project_id,
+					'company_id'	=> $this->session->session_data['user_id'],
+					'teamleader_id' => $teamleader_id
+				);
+			$this->company_model->create_project_link($project_link);
+		}
+	}
+
+
+/*
+The following function are used to edit the dabase
+*/
+	public function editProject(){
+		$project_id =  $this->uri->segment(3);
+		//echo 'Project ID: '.$project_id;
+		$this->load->model('company_model');
+		$data['project'] = $this->company_model->getProjectById($project_id);
+		$data['type'] = "Project";
+
+		$this->header();
+		$this->load->view('company/edit.php',$data);
+		$this->footer();
+			//$data['search'] = $this->input->post('search');
+	}
+
+	public function editEmployee(){
+		$employee_id = $this->uri->segment(3);
+		$this->load->model('company_model');
+		$data['employee'] = $this->company_model->getEmployeeById($employee_id);
+		$data['type'] = "Employee";
+		$this->header();
+		$this->load->view('company/edit.php',$data);
+		$this->footer();
+	}
+
+	public function editTeamleader(){
+		$teamleader_id = $this->uri->segment(3);
+		$this->load->model('company_model');
+		$data['teamleader'] = $this->company_model->getTeamleaderById($teamleader_id);
+		$data['type'] = "Teamleader";
+		$this->header();
+		$this->load->view('company/edit.php',$data);
+		$this->footer();
+	}
+
+	public function editNote(){
+		//echo 'this';
+		$note_id = $this->uri->segment(3);
+		//echo $note_id;
+		$this->load->model('company_model');
+		$data['note'] = $this->company_model->getNoteById($note_id);
+		$data['current_project'] = $this->company_model->getNote();
+		$data['project_list'] = $this->company_model->getAllProject();
+		$data['type'] = "Note";
+		$this->header();
+		$this->load->view('company/edit.php',$data);
+		$this->footer();
+	}
+
+	public function update_project(){
+		//echo $this->session->session_data['user_id'];
+		$project = array(
+				'id' 				=> $this->input->post('id'),
+				'company_id'		=>$this->session->session_data['user_id'],
+				'name'				=>$this->input->post('name'),
+				'start_date'		=>$this->input->post('start_date'),
+				'finish_date'		=>$this->input->post('finish_date'),
+				'actual_finish_date'=>$this->input->post('actual_finish_date'),
+				'url'				=>$this->input->post('url'),
+				'completion'		=>$this->input->post('completion'),
+				'status'			=>$this->input->post('status'),
+			);
+		$this->load->model('company_model');
+		$this->company_model->updateProject($project);
+		redirect('/company/project_list/', 'refresh');
+	}
+
+/*
+	The below function is to update the database
+*/
+	public function update_employee(){
+		//echo $this->session->session_data['user_id'];
+		$employee = array(
+				'id' 				=> $this->input->post('id'),
+				'company_id'		=>$this->session->session_data['user_id'],
+				'name'				=>$this->input->post('name'),
+				'address'			=>$this->input->post('address'),
+				'phone'				=>$this->input->post('phone'),
+			);
+		$this->load->model('company_model');
+		$this->company_model->updateEmployee($employee);
+		redirect('/company/employee_list/', 'refresh');
+	}
+
+	public function update_teamleader(){
+		//echo $this->session->session_data['user_id'];
+		$teamleader = array(
+				'id' 				=> $this->input->post('id'),
+				'company_id'		=>$this->session->session_data['user_id'],
+				'name'				=>$this->input->post('name'),
+				'address'			=>$this->input->post('address'),
+				'phone'				=>$this->input->post('phone'),
+			);
+		$this->load->model('company_model');
+		$this->company_model->updateTeamleader($teamleader);
+		redirect('/company/teamleader_list/', 'refresh');
+	}
+
+	public function update_note(){
+	$this->load->model('company_model');
+	//echo $this->input->post('project_list');
+	
+		$pro_id = $this->company_model->getProjectId($this->input->post('project_list'));
+		//var_dump($pro_id);
+		//$param['teamleader']	= $this->input->post('teamleader');
+		//$param['project_name']  = $project['name'];
+ 		//$this->project_link($param);
+ 		//var_dump($pro_id);
+ 		
+		foreach ($pro_id as $row) {
+				# code...
+				$project_id = $row->id;
+		}
+ 		
+		$note = array(
+					'id'				=> NULL,
+					'title'				=> $this->input->post('title'),
+					'body'				=> $this->input->post('body'),
+					'sender'			=> $this->session->session_data['user_id'],
+					'project_id'		=> $project_id,
+			);
+		
+		$this->company_model->updateNote($note);
+		
+ 		redirect('/company/view_note/', 'refresh');
+	}
+
+
+/*
+	The below functions are for delete from database
+
+*/
+
+	public function deleteProject(){
+		$this->load->model('company_model');
+		$data['table_name'] = 'project';
+		$data['id'] = $this->uri->segment(3);
+		$this->company_model->deleteAll($data);
+		redirect('/company/project_list/','refresh');
+	}
+
+	public function deleteEmployee(){
+		$this->load->model('company_model');
+		$data['table_name'] = 'employee';
+		$data['id'] = $this->uri->segment(3);
+		$this->company_model->deleteAll($data);
+		redirect('/company/employee_list/','refresh');	
+	}
+
+	public function deleteTeamleader(){
+		$this->load->model('company_model');
+		$data['table_name'] = 'team_leader';
+		$data['id'] = $this->uri->segment(3);
+		$this->company_model->deleteAll($data);
+		redirect('/company/teamleader_list/','refresh');	
+	}
+
+	public function deleteNote(){
+		$this->load->model('company_model');
+		$data['table_name'] = 'note';
+		$data['id'] = $this->uri->segment(3);
+		$this->company_model->deleteAll($data);
+		redirect('/company/view_note/','refresh');	
+	}
+
+	public function deleteTicket(){
+		$this->load->model('company_model');
+		$data['table_name'] = 'ticket';
+		$data['id'] = $this->uri->segment(3);
+		$this->company_model->deleteAll($data);
+		redirect('/company/view_ticket/','refresh');	
+	}
+
+
+/*			if(strcmp($project['teamleader'],'name')==0)
+			$project['teamleader']=NULL;
+
+		$project_link = array(
+					'id'		=>NULL,
+					'project_id' \\\\\\\
+			);
+		$project_link['teamleader']	= $this->input->post('teamleader');
+*/
 }
 ?>

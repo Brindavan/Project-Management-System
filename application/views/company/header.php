@@ -5,13 +5,22 @@
         <title>Admin Home Page</title>
         <!-- Bootstrap -->
         <link rel="icon" href="<?php echo base_url();?>application/assets/images/logo/favicon.png" type="logo/image/gif">
-        <link href="<?php //echo base_url();?>application/assets/css/company/bootstrap-cerulean.min.css" rel="stylesheet" media="screen">
+        
         <link href="<?php echo base_url();?>application/assets/css/company/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="<?php echo base_url();?>application/assets/css/company/styles.css" rel="stylesheet" media="screen">
-        <link href="<?php //echo base_url();?>application/assets/css/company/screen.css" rel="stylesheet" media="screen">
         
+        <script src="<?php echo base_url();?>application/assets/js/company/bootstrap-datepicker.js"></script>
         <script src="<?php echo base_url();?>application/assets/js/company/jquery-1.9.1.min.js"></script>
-        <script src="<?php echo base_url();?>application/assets/js/company//bootstrap.min.js"></script>
+        <script src="<?php echo base_url();?>application/assets/js/company/bootstrap.min.js"></script>
+        
+        <script>
+        jQuery.noConflict();
+
+$(document).ready(function(){
+    $('.datepicker').datepicker();
+    });
+</script>
+
     </head>
     
     <body>
@@ -43,7 +52,7 @@
                         </ul>
                         <ul class="nav">
                             <li class="active">
-                                <a href="#">Dashboard</a>
+                                <a href="<?php echo base_url('index.php/Login/user/index.php');?>">Dashboard</a>
                             </li>
                            
                             <li class="dropdown">
@@ -82,7 +91,7 @@
                                     <li class="divider"></li>
                                     <li>
                                         <?php
-                                            $value = 'team_leader_list';
+                                            $value = 'teamleader_list';
                                             echo anchor('company/'.$value.'', 'Team Leader List');
                                         ?>
                                     </li>
