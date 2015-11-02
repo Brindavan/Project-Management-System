@@ -62,9 +62,7 @@ switch ($category) {
 										echo '<td>'.$row->status.'</td>';
 										echo '<td>'.$row->completion.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="editProject/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="deleteProject/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 										echo "</tr>";
@@ -83,28 +81,15 @@ switch ($category) {
 	<?php break;
 	
 	case 'employee_list':
-	case 'teamleader_list': 
-	if($category=="teamleader_list")
-			$name = "Teamleader";
-		else
-			$name = "Employee";
+		$name = "Employee";
 		//echo $name;
 		?>
 
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<?php if($category=='employee_list'){?>
-            <h4>Employee List</h4>
+			<h4>Employee List</h4>
             	All your Employees.
-            <?php
-        	}else if($category=='teamleader_list'){?>
-        		<h4>Team Leader List</h4>
-            All your Team Leaders.
-        	<?php }
-
-
-            ?>
-        </div>
+            </div>
     	<div class="navbar">
         	<div class="navbar-inner">
                 <ul class="breadcrumb">
@@ -145,9 +130,7 @@ switch ($category) {
 										echo '<td>'.$row->address.'</td>';
 										echo '<td>'.$row->phone.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit'.$name.'/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete'.$name.'/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -164,11 +147,7 @@ switch ($category) {
 	break;
 
 	case 'search_employee':
-	case 'search_teamleader':
-		if($category=="search_teamleader")
-			$name = "Teamleader";
-		else
-			$name = "Employee";
+		$name = "Employee";
 		?>
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -211,14 +190,12 @@ switch ($category) {
 								<?php 
 									foreach ($employee as $row) {
 										echo '<tr>';
-										echo $name;		
+										
 										echo '<td>'.$row->name.'</td>';
 										echo '<td>'.$row->address.'</td>';
 										echo '<td>'.$row->phone.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="edit'.$name.'/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="delete'.$name.'/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -269,9 +246,9 @@ switch ($category) {
 								<tr>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Task</a></th>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Project</a></th>
-									<th class="table-header-repeat line-left"><a href="">generator</a></th>
 									<th class="table-header-repeat line-left"><a href="">Status</a></th>
 									<th class="table-header-repeat line-left"><a href="">Assign to</a></th>
+									<th class="table-header-options line-left"><a href="">Options</a></th>
 								</tr>
 								
 								<?php 
@@ -279,9 +256,13 @@ switch ($category) {
 										echo '<tr>';
 										echo '<td>'.$row->task.'</td>';
 										echo '<td>'.$row->project.'</td>';
-										echo '<td>'.$row->generator.'</td>';
 										echo '<td>'.$row->status.'</td>';
 										echo '<td>'.$row->assign.'</td>';
+										echo '<td class="options-width">';
+										echo '<a href="editTask/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="deleteTask/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsTask/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										</td>';
 										echo "</tr>";
 			                                                               
 									}

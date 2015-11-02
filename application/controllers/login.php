@@ -16,7 +16,7 @@ class Login extends CI_Controller {
 		$this->load->view('login/index');
 	}
 
-	public function user(){
+	public function dashboard(){
 		//echo 'chceking';
 		//echo $this->session->userdata('item');
 		$login = array(
@@ -71,11 +71,17 @@ class Login extends CI_Controller {
 
 					case 'teamleader':
 						//echo 'Teamleader';
+						$this->load->model('teamleader_model');
+						$data['project'] = $this->teamleader_model->getProject();
+						$data['note'] = $this->teamleader_model->getNote();
+						$data['task'] = $this->teamleader_model->getTask();
+						$data['ticket'] = $this->teamleader_model->getTicket();
+						$data['sidebar_menu']=array('Menu 1', 'Menu 2');
 						$this->load->view('teamleader/header');
-						$this->load->view('teamleader/sidebar');
-						$this->load->view('teamleader/dashboard');
+						$this->load->view('teamleader/sidebar',$data);
+						$this->load->view('teamleader/dashboard',$data);
 						$this->load->view('teamleader/footer');
-						break;	
+					break;	
 					
 					default:
 						$error['error_message']="Something doesn't work correctly";

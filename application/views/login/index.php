@@ -34,7 +34,7 @@
 			$atrributes = array(
 							'name'		=>'login_form'
 				);
-			echo form_open('Login/user',$atrributes); 
+			echo form_open('Login/dashboard',$atrributes); 
 			echo '<table border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<th>Username</th>
