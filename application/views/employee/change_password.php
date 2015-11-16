@@ -37,7 +37,7 @@
                         $atrributes = array(
                                         'name'      =>'password_change'
                                     );
-                        echo form_open('teamleader/password_change',$atrributes); 
+                        echo form_open('company/password_change',$atrributes); 
                         $data = array(
                                 'type'      => 'password',
                                 'name'        => 'oldPassword',

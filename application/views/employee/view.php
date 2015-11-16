@@ -62,7 +62,9 @@ switch ($category) {
 										echo '<td>'.$row->status.'</td>';
 										echo '<td>'.$row->completion.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="editProject/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="deleteProject/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 										echo "</tr>";
@@ -79,138 +81,6 @@ switch ($category) {
 		</div>
 	
 	<?php break;
-	
-	case 'employee_list':
-		$name = "Employee";
-		//echo $name;
-		?>
-
-		<div class="alert alert-success">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<h4>Employee List</h4>
-            	All your Employees.
-            </div>
-    	<div class="navbar">
-        	<div class="navbar-inner">
-                <ul class="breadcrumb">
-                    <i class="icon-chevron-left hide-sidebar"><a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a></i>
-                    <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
-                    <li class="active">
-                        Dashboard
-                    </li>
-                    <!--
-                    <li>
-                        <a href="#">Settings</a> <span class="divider">/</span>	
-                    </li>
-                    <li class="active">Tools</li>
-                -->
-                </ul>
-        	</div>
-    	</div>
-        <div class="row-fluid">
-            <div class="block">
-    	        <div class="navbar navbar-inner block-header">
-			        <div class="muted pull-left">Employee</div>
-               </div>
-			        <div class="block-content collapse in">
-			        	<form id="mainform" action="">
-			        		<?php if($employee!=NULL):?>
-							<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-								<tr>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Name</a></th>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Address</a></th>
-									<th class="table-header-repeat line-left"><a href="">Phone</a></th>
-									<th class="table-header-options line-left"><a href="">Options</a></th>
-								</tr>
-								
-								<?php 
-									foreach ($employee as $row) {
-										echo '<tr>';
-										echo '<td>'.$row->name.'</td>';
-										echo '<td>'.$row->address.'</td>';
-										echo '<td>'.$row->phone.'</td>';
-										echo '<td class="options-width">';
-										echo '<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
-										</td>';
-										echo "</tr>";
-			                                                               
-									}
-								
-								endif;
-								?>
-								
-							</table>
-						</form>
-			       	</div>	
-			</div>
-		</div><?php
-	break;
-
-	case 'search_employee':
-		$name = "Employee";
-		?>
-		<div class="alert alert-success">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<h4>Employee</h4>
-            All Employee List
-        </div>
-    	<div class="navbar">
-        	<div class="navbar-inner">
-                <ul class="breadcrumb">
-                    <i class="icon-chevron-left hide-sidebar"><a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a></i>
-                    <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
-                    <li class="active">
-                        Dashboard
-                    </li>
-                    <!--
-                    <li>
-                        <a href="#">Settings</a> <span class="divider">/</span>	
-                    </li>
-                    <li class="active">Tools</li>
-                -->
-                </ul>
-        	</div>
-    	</div>
-        <div class="row-fluid">
-            <div class="block">
-    	        <div class="navbar navbar-inner block-header">
-			        <div class="muted pull-left">Search</div>
-               </div>
-			        <div class="block-content collapse in">
-			        	<form id="mainform" action="">
-			        		<?php if($employee!=NULL):?>
-							<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-								<tr>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Name</a></th>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Address</a></th>
-									<th class="table-header-repeat line-left"><a href="">Phone</a></th>
-									<th class="table-header-options line-left"><a href="">Options</a></th>
-								</tr>
-								
-								<?php 
-									foreach ($employee as $row) {
-										echo '<tr>';
-										
-										echo '<td>'.$row->name.'</td>';
-										echo '<td>'.$row->address.'</td>';
-										echo '<td>'.$row->phone.'</td>';
-										echo '<td class="options-width">';
-										echo '<a href="details'.$name.'/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
-										</td>';
-										echo "</tr>";
-			                                                               
-									}
-								
-								endif;
-								?>
-								
-							</table>
-						</form>
-			       	</div>	
-			</div>
-		</div><?php
-	break;
-
 	case 'task':?>
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -246,22 +116,23 @@ switch ($category) {
 								<tr>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Task</a></th>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Project</a></th>
+									<th class="table-header-repeat line-left"><a href="">generator</a></th>
 									<th class="table-header-repeat line-left"><a href="">Status</a></th>
-									<th class="table-header-repeat line-left"><a href="">Assign to</a></th>
 									<th class="table-header-options line-left"><a href="">Options</a></th>
+
 								</tr>
 								
 								<?php 
 									foreach ($task as $row) {
 										echo '<tr>';
 										echo '<td>'.$row->task.'</td>';
-										echo '<td>'.$row->project.'</td>';
+										echo '<td>'.$row->project_name.'</td>';
+										echo '<td>'.$row->teamleader_name.'</td>';
 										echo '<td>'.$row->status.'</td>';
-										echo '<td>'.$row->assign.'</td>';
 										echo '<td class="options-width">';
-										echo '<a href="editTask/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="deleteTask/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="detailsTask/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
+										echo '<a href="editProject/'.$row->id.'" title="Edit" class="icon-1 info-tooltip"></a>
+											<a href="deleteProject/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
+											<a href="detailsProject/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
 										</td>';
 										echo "</tr>";
 			                                                               
@@ -276,9 +147,7 @@ switch ($category) {
 			</div>
 		</div><?php
 	break;
-
 	case 'ticket':?>
-
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<h4>Ticket</h4>
@@ -313,7 +182,7 @@ switch ($category) {
 								<tr>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Problem</a></th>
 									<th class="table-header-repeat line-left minwidth-1"><a href="">Project</a></th>
-									<th class="table-header-repeat line-left"><a href="">Issuer</a></th>
+									<th class="table-header-repeat line-left"><a href="">Status</a></th>
 									<th class="table-header-options line-left"><a href="">Options</a></th>
 
 								</tr>
@@ -323,7 +192,7 @@ switch ($category) {
 										echo '<tr>';
 										echo '<td>'.$row->problem.'</td>';
 										echo '<td>'.$row->project.'</td>';
-										echo '<td>'.$row->issuer.'</td>';
+										echo '<td>'.$row->status.'</td>';
 										echo '<td class="options-width">';
 										echo '<a href="deleteTicket/'.$row->id.'" title="Delete" class="icon-2 info-tooltip"></a>
 											<a href="detailsTicket/'.$row->id.'" title="Details" class="icon-5 info-tooltip"></a>
@@ -341,7 +210,6 @@ switch ($category) {
 			</div>
 		</div><?php
 	break;
-	
 	case 'note':?>
 
 		<div class="alert alert-success">
@@ -407,12 +275,12 @@ switch ($category) {
 			</div>
 		</div><?php
 	break;
-	
-	case 'assign_employee':?>
+	case 'profile':?>
+
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<h4>Note</h4>
-            All Note List
+			<h4>Profile</h4>
+            Your Profile
         </div>
     	<div class="navbar">
         	<div class="navbar-inner">
@@ -434,48 +302,66 @@ switch ($category) {
         <div class="row-fluid">
             <div class="block">
     	        <div class="navbar navbar-inner block-header">
-			        <div class="muted pull-left">Assign Employee to Project</div>
+			        <div class="muted pull-left">Profile</div>
                </div>
 			        <div class="block-content collapse in">
-			        	<form id="mainform" action="">
-			        		<?php if($project_employee!=NULL):?>
-							<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
+			        	<?php
+                        $atrributes = array(
+                                        'name'      =>'profile'
+                                    );
+                        echo form_open('employee/profile',$atrributes).'<br>'; 
+                        $data = array(
+                                'type'      => 'text',
+                                'name'        => 'Phone',
+                                'placeholder' => 'Phone',
+                                'class'     => 'inp-form',
+                                'required' => 'required'
+
+                            );
+                        echo form_input($data).'<br>';
+                         $data = array(
+                                'type'      => 'text',
+                                'name'        => 'Address',
+                                'placeholder' => 'Address',
+                                'class'     => 'inp-form',
+                                'required' => 'required'
+
+                            );
+                        echo form_input($data).'<br>';
+                        echo 'Your Projects:'?>
+                        	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 								<tr>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Project</a></th>
-									<th class="table-header-repeat line-left minwidth-1"><a href="">Employee</a></th>
-									<th class="table-header-repeat line-left"><a href="">Task</a></th>
-									<th class="table-header-options line-left"><a href="">Options</a></th>
+									<th class="table-header-repeat line-left minwidth-1"><a href="">Title</a></th>
+									<th class="table-header-repeat line-left minwidth-1"><a href="">Note</a></th>
+									<th class="table-header-repeat line-left"><a href="">Project</a></th>
+									
 
 								</tr>
 								
 								<?php 
-									foreach ($project_employee as $row) {
+									foreach ($project as $row) {
 										echo '<tr>';
-										echo '<td>'.$row->project_name.'</td>';
-										echo '<td>'.$row->employee_name.'</td>';
-										echo '<td>'.$row->task.'</td>';
-										echo '<td class="options-width">';
-										echo '<a href="editNote/'.$row->project_id.'" title="Edit" class="icon-1 info-tooltip"></a>
-											<a href="deleteNote/'.$row->project_id.'" title="Delete" class="icon-2 info-tooltip"></a>
-											<a href="detailsNote/'.$row->project_id.'" title="Details" class="icon-5 info-tooltip"></a>
-										</td>';
+										echo '<td>'.$row->name.'</td>';
+										echo '<td>'.$row->name.'</td>';
+										echo '<td>'.$row->name.'</td>';
 										echo "</tr>";
 			                                                               
 									}
 								
-								endif;
 								?>
 								
 							</table>
-						</form>
+                        <?php
+							
+                       echo form_close();
+                    ?>
 			       	</div>	
 			</div>
 		</div><?php
 	break;
-	
 	default:
-		# code...
-		break;
+		
+	break;
 }
 ?>
 

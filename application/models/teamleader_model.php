@@ -13,6 +13,7 @@ class Teamleader_model extends CI_Model
 	}
 	
 	function getNote(){
+		$this->db->select('note.id, note.title, note.body, project.name as name');
 		$this->db->from('note');
 		$this->db->join('project','note.project_id = project.id','inner');
 		$this->db->join('project_link','project.id = project_link.project_id','inner');
@@ -23,10 +24,10 @@ class Teamleader_model extends CI_Model
 		return $query->result();
 	} 
 
-	
+
 	
 	function getTicket(){
-		$this->db->select('ticket.id,ticket.problem,employee.name,ticket.status');
+		$this->db->select('ticket.id,ticket.problem,employee.name as issuer,ticket.status, project.name as project');
 		$this->db->from('ticket');
 		$this->db->join('project','ticket.project_id = project.id','inner');
 		$this->db->join('project_link','project.id = project_link.project_id','inner');
@@ -85,14 +86,16 @@ class Teamleader_model extends CI_Model
 	
 	}
 	function getEmployeeProject(){
-		$this->db->select('employee_project.id,employee.name,project.name');
+		$this->db->select('employee_project.id as project_id,employee.name as employee_name,project.name as project_name,
+							task.id as task_id,task.task');
 		$this->db->from('employee');
 		$this->db->join('employee_project','employee.id = employee_project.employee_id','inner');
 		$this->db->join('team_leader','team_leader.id = employee_project.teamleader_id','inner');
 		$this->db->join('project','project.id = employee_project.project_id','inner');
+		$this->db->join('task','task.assign = employee.id','inner');
 		$this->db->where('team_leader.name',$this->session->session_data['username']);
 		$query = $this->db->get();
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -148,6 +151,16 @@ class Teamleader_model extends CI_Model
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
+	}
+
+	public function update_password($new_password){
+		$data = array(
+               'password' => $new_password,
+               );
+
+		$this->db->where('id', $this->session->session_data['user_id']);
+		$this->db->update('user', $data);
+		
 	}
 }
 

@@ -66,7 +66,20 @@ class Login extends CI_Controller {
 						break;
 
 					case 'employee':
-						echo 'Employee';
+						$this->load->model('employee_model');
+						$data['total_project'] = $this->employee_model->getTotalProject();
+						$data['total_task'] = $this->employee_model->getTotalTask();
+						$data['total_note'] = $this->employee_model->getTotalNote();
+						$data['total_ticket'] = $this->employee_model->getTotalTicket();
+						$data['project'] = $this->employee_model->getAllProject();
+						$data['task'] = $this->employee_model->getAllTask();
+						$data['note'] = $this->employee_model->getAllNote();
+						$data['ticket'] = $this->employee_model->getAllTicket();
+						$data['sidebar_menu']=array('Menu 1', 'Menu 2');
+						$this->load->view('employee/header');
+						$this->load->view('employee/sidebar',$data);
+						$this->load->view('employee/dashboard',$data);
+						$this->load->view('employee/footer');
 						break;
 
 					case 'teamleader':

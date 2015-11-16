@@ -1,16 +1,17 @@
-<?php 
-function custom_echo($x, $length)
-{
-  if(strlen($x)<=$length)
-  {
-    echo $x;
-  }
-  else
-  {
-    $y=substr($x,0,$length) . '...';
-    echo $y;
-  }
-}
+<?php
+    foreach ($total_task as $row) {
+        $total_task=$row->total;
+    }
+    foreach ($total_note as $row) {
+        $total_note=$row->total;
+    }
+    foreach ($total_ticket as $row) {
+        $total_ticket = $row->total;
+    }
+    foreach ($total_project as $row) {
+        $total_project=$row->total;
+    }
+    //echo $this->session->sessiondata('user_id');
 
 ?>
 <div class="span9" id="content">
@@ -44,7 +45,7 @@ function custom_echo($x, $length)
         <div class="block">
             <div class="navbar navbar-inner block-header">
                 <div class="muted pull-left">Report</div>
-                <div class="pull-right"><span class="badge badge-warning">3</span>
+                <div class="pull-right"><span class="badge badge-warning"><?php echo $total_project;?></span>
                 </div>
             </div>
             <div class="block-content collapse in">
@@ -71,6 +72,8 @@ function custom_echo($x, $length)
                             
                             ?>
                         
+                    
+                
             </div>
         </div>
         <!-- /block -->
@@ -82,33 +85,42 @@ function custom_echo($x, $length)
             <div class="block">
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">Note</div>
+                    <div class="pull-right"><span class="badge badge-info"><?php echo $total_note;?></span>
+
+                    </div>
                 </div>
                 <div class="block-content collapse in">
                     <table class="table table-striped">
-                        <thead>
+                        <?php
+                            if($note == NULL)
+                                echo 'Database Empty';
+                            else
+                                {?>
+                                    <thead>
                             <tr>
 
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Body</th>
+                                <th>Project</th>
                             </tr>
                         </thead>
                        <tbody>
-                            <?php 
-                                $i=1;
-                                foreach ($note as $row) {
-                                echo '<tr>';
-                                    echo '<td>'.$i++.'</td>';
-                                    echo '<td>';
-                                    echo custom_echo($row->title,20);
-                                    echo '</td>';
-                                    echo '<td>';
-                                    echo custom_echo($row->body,30);
-                                    echo '</td>';                                    
-                                echo '</tr>';        
-                                }
+
+                        <?php 
+                            $i=1;
+                            foreach ($note as $note) {
+                            echo '<tr>';
+                                echo '<td>'.$i++.'</td>';
+                                echo '<td>'.$note->title.'</td>';
+                                echo '<td>'.$note->body.'</td>';
+                                echo '<td>'.$note->name.'</td>';
+                            echo '</tr>';        
+                            }
+                        }
+                        ?>
+                        
                             
-                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -120,52 +132,54 @@ function custom_echo($x, $length)
             <div class="block">
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">Task</div>
-                    <div class="pull-right"><span class="badge badge-info">3</span>
+                    <div class="pull-right"><span class="badge badge-info"><?php echo $total_task;?></span>
 
                     </div>
                 </div>
                 <div class="block-content collapse in">
                     <table class="table table-striped">
-                        <thead>
+                        <?php
+                            if($task == NULL)
+                                echo 'Database Empty';
+                            else
+                                {?>
+                                    <thead>
                             <tr>
+
                                 <th>#</th>
                                 <th>Task</th>
+                                <th>Project</th>
                                 <th>Status</th>
-                                
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php 
-                                $i=1;
-                                foreach ($task as $row) {
-                                echo '<tr>';
-                                    echo '<td>'.$i++.'</td>';
-                                    echo '<td>';
-                                    echo custom_echo($row->task,30);
-                                    echo '</td>';
-                                    echo '<td>';
-                                    echo $row->status;
-                                    echo '</td>';                                    
-                                echo '</tr>';        
-                                }
-                            
-                            ?>
+                       <tbody>
+
+                        <?php 
+                            $i=1;
+                            foreach ($task as $task) {
+                            echo '<tr>';
+                                echo '<td>'.$i++.'</td>';
+                                echo '<td>'.$task->task.'</td>';
+                                echo '<td>'.$task->project_name.'</td>';
+                                echo '<td>'.$task->status.'</td>';
+                            echo '</tr>';        
+                            }
+                        }
+                        ?>
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- /block -->
         </div>
-
-
     </div>
-
     <div class="row-fluid">
         <div class="span12">
             <!-- block -->
             <div class="block">
                 <div class="navbar navbar-inner block-header">
                     <div class="muted pull-left">Ticket</div>
+                    <div class="pull-right"><span class="badge badge-info"><?php echo $total_ticket;?></span></div>
                 </div>
                 <div class="block-content collapse in">
                             <?php 
@@ -176,14 +190,12 @@ function custom_echo($x, $length)
                                             <div class="clear"></div>
 
                                             <?php if(strcmp($row->status,"open")==0){ ?>
-                                                <div id="open">Open</div>
+                                                <div id="open">UnSolved</div>
                                             <?php }else{ ?>
-                                                <div id="close">Close</div>
+                                                <div id="close" style="color:red;">Solved</div>
                                             <?php } ?>
                                         </div>
-                                        <div class="author">
-                                             By: <?php echo $row->issuer;?>   
-                                        </div>
+                                     
                                     </div>
                                 <?php } ?>
                 </div>

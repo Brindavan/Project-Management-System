@@ -40,7 +40,6 @@ class Company extends CI_Controller
 	}
 
 	public function search(){
-
 		$data['search'] = $this->input->post('search');
 		$this->load->model('company_model');
 		$data['project'] = $this->company_model->getSearchProject($data['search']);

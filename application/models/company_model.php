@@ -10,7 +10,7 @@ class Company_model extends CI_Model
 		$this->db->select('name,address,phone');
 		$this->db->from('employee');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
-		$this->db->limit(5);
+		$this->db->limit(3);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -20,7 +20,7 @@ class Company_model extends CI_Model
 		$this->db->select('name,address,phone');
 		$this->db->from('team_leader');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
-		$this->db->limit(5);
+		$this->db->limit(3);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -61,6 +61,16 @@ class Company_model extends CI_Model
 		//echo $this->db->last_query();
 		return $query->result();
 	}
+
+	public function getTeamleaderByName($name){
+		//echo $id;
+		$this->db->from('team_leader');
+		$this->db->where('name',$name);
+		$query=$this->db->get();
+		//echo $this->db->last_query();
+		return $query->result();
+	}
+
 	public function getNoteByID($id){
 		//echo $id;
 		$this->db->from('note');
@@ -74,6 +84,7 @@ class Company_model extends CI_Model
 		$this->db->select('count(name) AS total');
 		$this->db->from('employee');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
+		//$this->db->limit(3);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -113,6 +124,7 @@ class Company_model extends CI_Model
 	public function getAllProject(){
 		$this->db->from('project');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
+		$this->db->order_by('name');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -121,6 +133,7 @@ class Company_model extends CI_Model
 	public function getAllEmployee(){
 		$this->db->from('employee');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
+		$this->db->order_by('name');
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -129,6 +142,7 @@ class Company_model extends CI_Model
 	public function getAllTeamLeader(){
 		$this->db->from('team_leader');
 		$this->db->where('company_id',$this->session->session_data['user_id']);
+		$this->db->order_by('name');
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -142,7 +156,7 @@ class Company_model extends CI_Model
 					(name like "%'.$search.'%"
 						or address like "%'.$search.'%"
 						or phone like "%'.$search.'%"						
-					)
+					) order by name
 					';
 		$query = $this->db->query($query);
 		//echo $this->db->last_query();
@@ -156,6 +170,7 @@ class Company_model extends CI_Model
 		$this->db->join('project','task.project_id=project.id','inner');
 		$this->db->join('team_leader','team_leader.id=task.generator','inner');
 		$this->db->join('employee','employee.id=task.assign','inner');
+		$this->db->order_by('task.task');
 
 		//$this->db->from('task');
 		$query = $this->db->get();
@@ -168,6 +183,7 @@ class Company_model extends CI_Model
 		$this->db->from('note');
 		$this->db->where('note.sender',$this->session->session_data['user_id']);
 		$this->db->join('project','project.id=note.project_id','inner');
+		$this->db->order_by('note.title');
 		$query = $this->db->get();
 		//echo $this->db->last_query();
 		return $query->result();
@@ -179,6 +195,7 @@ class Company_model extends CI_Model
 		$this->db->where('ticket.company_id',$this->session->session_data['user_id']);
 		$this->db->join('employee','employee.id=ticket.issuer','inner');
 		$this->db->join('project','ticket.project_id=project.id','inner');
+		$this->db->order_by('ticket.problem');
 		//$this->db->from('task');
 		$query = $this->db->get();
 		//echo $this->db->last_query();
@@ -188,7 +205,7 @@ class Company_model extends CI_Model
 	public function getUser(){
 		$this->db->from('user');
 		$query = $this->db->get();
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -204,6 +221,7 @@ class Company_model extends CI_Model
 
 	public function new_project($project){
 		$this->db->insert('project', $project); 
+
 	}
 
 	public function new_employee($employee){
