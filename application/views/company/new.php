@@ -9,7 +9,7 @@ switch ($from) {
 		//echo 'project';
 		?>
 		<div class="span9" id="content">
-    <div class="row-fluid">
+    	<div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Great</h4>
@@ -34,7 +34,7 @@ switch ($from) {
         	</div>
     	</div>
 
-    <div class="row-fluid">
+   	 <div class="row-fluid">
         <!-- block -->
         <div class="block">
             <div class="navbar navbar-inner block-header">
@@ -104,13 +104,17 @@ switch ($from) {
 							echo '<td>';
 							$option = array();
 							$option['name'] = "Select Team Leader";
-							foreach ($teamleader as $row) {
-								//echo $row->name;
-								$option[$row->name] 		= $row->name;	
+							if(empty($teamleader)!=1){							
+								foreach ($teamleader as $row) {
+									//echo $row->name;
+									$option[$row->name] 		= $row->name;	
+								}
+								echo form_dropdown('teamleader',$option, 'name');
 							}
-							
-							
-						echo form_dropdown('teamleader',$option, 'name');
+							else{
+								echo 'You add can <strong>Teamleader</strong> first<br><br>';
+							}
+												
 			            echo '</td>';
 						echo '</tr>';
 
@@ -124,6 +128,7 @@ switch ($from) {
 								'value'		=> 'Create',								
 				              	'class'		=> 'form-submit'
 				            );
+			            if(empty($teamleader)!=1)
 				            echo form_submit($data);
 			            echo '</td>';
 						echo '</tr>';
@@ -137,16 +142,16 @@ switch ($from) {
             </div>
         </div>
         <!-- /block -->
-    </div>
-</div>
-		<?php
+	    </div>
+		</div>
+			<?php
 	break;
 	
 	case 'employee_list':
 	case 'employee_search':
 		?>
 		<div class="span9" id="content">
-    <div class="row-fluid">
+    	<div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Great</h4>
@@ -171,97 +176,97 @@ switch ($from) {
         	</div>
     	</div>
 
-    <div class="row-fluid">
-        <!-- block -->
-        <div class="block">
-            <div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">New Employee</div>
-               </div>
-            <div class="block-content collapse in">
-                <div class="span4">
-                	<?php
-                		$atrributes = array(
-							'name'		=>'login_form'
-						);
-						echo form_open('company/add_Employee',$atrributes);
+	    <div class="row-fluid">
+	        <!-- block -->
+	        <div class="block">
+	            <div class="navbar navbar-inner block-header">
+	                <div class="muted pull-left">New Employee</div>
+	               </div>
+	            <div class="block-content collapse in">
+	                <div class="span4">
+	                	<?php
+	                		$atrributes = array(
+								'name'		=>'login_form'
+							);
+							echo form_open('company/add_Employee',$atrributes);
 
-						echo '<table border="0" cellpadding="0" cellspacing="0">';
-						echo '<tr>';
-							echo '<th></th>';
-							echo '<td>';
-							$data = array(
-				              	'type'		=> 'text',
-				              	'name'        => 'employee_name',
-				              	'placeholder' => 'Employee Full Name',
-				              	'class'		=> 'login-inp',
-				              	'required' => 'required',
-				              	'style'		=>'height: 30px;',
-				            );
-				            echo form_input($data);
-			            echo '</td>';
-						echo '</tr>';
+							echo '<table border="0" cellpadding="0" cellspacing="0">';
+							echo '<tr>';
+								echo '<th></th>';
+								echo '<td>';
+								$data = array(
+					              	'type'		=> 'text',
+					              	'name'        => 'employee_name',
+					              	'placeholder' => 'Employee Full Name',
+					              	'class'		=> 'login-inp',
+					              	'required' => 'required',
+					              	'style'		=>'height: 30px;',
+					            );
+					            echo form_input($data);
+				            echo '</td>';
+							echo '</tr>';
 
-						echo '<tr>';
-							echo '<th></th>';
-							echo '<td>';
-							$data = array(
-				              	'type'		=> 'text',
-				              	'name'        => 'address',
-				              	'placeholder' => 'Address',
-				              	'class'		=> 'login-inp',
-				              	'required' => 'required',
-				              	'style'		=>'height: 30px;',
+							echo '<tr>';
+								echo '<th></th>';
+								echo '<td>';
+								$data = array(
+					              	'type'		=> 'text',
+					              	'name'        => 'address',
+					              	'placeholder' => 'Address',
+					              	'class'		=> 'login-inp',
+					              	'required' => 'required',
+					              	'style'		=>'height: 30px;',
 
-				            );
-				            echo form_input($data);
-			            echo '</td>';
-						echo '</tr>';
+					            );
+					            echo form_input($data);
+				            echo '</td>';
+							echo '</tr>';
 
-						echo '<tr>';
-							echo '<th></th>';
-							echo '<td>';
-							$data = array(
-				              	'type'		=> 'text',
-				              	'name'        => 'phone',
-				              	'placeholder' => 'Phone Number',
-				              	'class'		=> 'login-inp',
-				              	'required' => 'required',
-				              	'style'		=>'height: 30px;',
+							echo '<tr>';
+								echo '<th></th>';
+								echo '<td>';
+								$data = array(
+					              	'type'		=> 'text',
+					              	'name'        => 'phone',
+					              	'placeholder' => 'Phone Number',
+					              	'class'		=> 'login-inp',
+					              	'required' => 'required',
+					              	'style'		=>'height: 30px;',
 
-				            );
-				            echo form_input($data);
+					            );
+					            echo form_input($data);
 
-			            echo '</td>';
-						echo '</tr>';
+				            echo '</td>';
+							echo '</tr>';
 
 
-						
-						echo '<tr>';
-							echo '<th></th>';
-							echo '<td>';
 							
-			            $data = array(
-								'type'		=> 'submit',
-								'name'		=> 'Submit',
-								'value'		=> 'Create',								
-				              	'class'		=> 'form-submit',
-				              	'style'		=> 'margin-top:2px;',
-				            );
-				            echo form_submit($data);
-			            echo '</td>';
-						echo '</tr>';
+							echo '<tr>';
+								echo '<th></th>';
+								echo '<td>';
+								
+				            $data = array(
+									'type'		=> 'submit',
+									'name'		=> 'Submit',
+									'value'		=> 'Create',								
+					              	'class'		=> 'form-submit',
+					              	'style'		=> 'margin-top:2px;',
+					            );
+					            echo form_submit($data);
+				            echo '</td>';
+							echo '</tr>';
 
 
-						echo '</table>'; 
-						echo form_close();
-			
-                	?>
-                </div>
-            </div>
-        </div>
-        <!-- /block -->
-    </div>
-</div>
+							echo '</table>'; 
+							echo form_close();
+				
+	                	?>
+	                </div>
+	            </div>
+	        </div>
+	        <!-- /block -->
+	    </div>
+		</div>
 		<?php
 	break;
 	
@@ -270,7 +275,7 @@ switch ($from) {
 				
 		?>
 		<div class="span9" id="content">
-    <div class="row-fluid">
+    	<div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Great</h4>
@@ -295,7 +300,7 @@ switch ($from) {
         	</div>
     	</div>
 
-    <div class="row-fluid">
+    		<div class="row-fluid">
         <!-- block -->
         <div class="block">
             <div class="navbar navbar-inner block-header">
@@ -384,8 +389,8 @@ switch ($from) {
             </div>
         </div>
         <!-- /block -->
-    </div>
-</div>
+    		</div>
+		</div>
 		<?php
 	break;
 
@@ -393,7 +398,7 @@ switch ($from) {
 	
 				?>
 		<div class="span9" id="content">
-    <div class="row-fluid">
+    		<div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Great</h4>
@@ -417,8 +422,7 @@ switch ($from) {
             	</div>
         	</div>
     	</div>
-
-    <div class="row-fluid">
+    		<div class="row-fluid">
         <!-- block -->
         <div class="block">
             <div class="navbar navbar-inner block-header">
@@ -473,15 +477,18 @@ switch ($from) {
 						echo '<tr>';
 							echo '<th></th>';
 							echo '<td>';
-							$option = array();
-							$option['name'] = "Select Project";
-							foreach ($project_list as $row) {
-								//echo $row->name;
-								$option[$row->name] 		= $row->name;	
+							if(empty($project_list)!=1){
+								$option = array();
+								$option['name'] = "Select Project";
+								foreach ($project_list as $row) {
+									//echo $row->name;
+									$option[$row->name] 		= $row->name;	
+								}
+								echo form_dropdown('project_list',$option, 'name');
 							}
-							
-							
-						echo form_dropdown('project_list',$option, 'name');
+							else{
+								echo 'You can create <strong>Project</strong> first.<br><br>';
+							}
 			            echo '</td>';
 						echo '</tr>';
 
@@ -497,6 +504,7 @@ switch ($from) {
 				              	'class'		=> 'form-submit',
 				              	'style'		=> 'margin-top:2px;',
 				            );
+			            	if(empty($project_list)!=1)
 				            echo form_submit($data);
 			            echo '</td>';
 						echo '</tr>';
@@ -510,14 +518,12 @@ switch ($from) {
             </div>
         </div>
         <!-- /block -->
-    </div>
-</div>
+    	</div>
+		</div>
 		<?php
 	break;
-	
-
 	default:
-		# code...
-		break;
+	# code...
+	break;
 }
 ?>

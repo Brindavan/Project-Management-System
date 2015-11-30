@@ -1,9 +1,27 @@
+<?php  
+    switch ($type) {
+        case 'project':
+            $breadcrumb = 'Project Search';
+            $breadcrumb_desc = 'You can search your project here';
+            $link="company/search";
+            break;
+        case 'employee':
+            $breadcrumb_desc = 'You can search your employee here';
+            $breadcrumb = 'Employee Search';
+            $link="company/search_employee";
+            break;
+        case 'teamleader':
+            $breadcrumb_desc = 'You can search your teamleader here';
+            $breadcrumb = 'Teamleader Search';
+            $link = "company/Search_teamleader";
+    }
+?>
 <div class="span9" id="content">
     <div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4>Welcome</h4>
-            You are in your home-page.
+            <h4>Search</h4>
+            <?php echo $breadcrumb_desc;?>
         </div>
         	<div class="navbar">
             	<div class="navbar-inner">
@@ -11,14 +29,10 @@
                         <i class="icon-chevron-left hide-sidebar"><a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a></i>
                         <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
                         <li class="active">
-                            Dashboard
+                            Dashboard 
                         </li>
-                        <!--
-                        <li>
-                            <a href="#">Settings</a> <span class="divider">/</span>	
-                        </li>
-                        <li class="active">Tools</li>
-                    -->
+                        <span class="divider">/</span>
+                        <li class="active"><?php echo $breadcrumb; ?></li>
                     </ul>
             	</div>
         	</div>
@@ -32,23 +46,7 @@
                </div>
             <div class="block-content collapse in">
                 <div class="span4">
-                    <?php  
-
-                        switch ($type) {
-                            case 'project':
-                                $link="company/search";
-                                break;
-                            case 'employee':
-                                $link="company/search_employee";
-                                break;
-                            case 'teamleader':
-                                $link = "company/Search_teamleader";
-                            default:
-                                //echo 'wrong';
-                                # code...
-                                break;
-                        }
-                    $link?>
+                    
                 	<?php
 		            	$atrributes = array(
 										'name'		=>'login_form'

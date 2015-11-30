@@ -2,25 +2,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin Home Page</title>
+        <title>Company Page</title>
         <!-- Bootstrap -->
         <link rel="icon" href="<?php echo base_url();?>application/assets/images/logo/favicon.png" type="logo/image/gif">
-        
         <link href="<?php echo base_url();?>application/assets/css/company/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="<?php echo base_url();?>application/assets/css/company/styles.css" rel="stylesheet" media="screen">
-        
         <script src="<?php echo base_url();?>application/assets/js/company/bootstrap-datepicker.js"></script>
         <script src="<?php echo base_url();?>application/assets/js/company/jquery-1.9.1.min.js"></script>
         <script src="<?php echo base_url();?>application/assets/js/company/bootstrap.min.js"></script>
-        
+        <script src="<?php echo base_url();?>application/assets/js/company/googlejsapi.js"></script>
         <script>
-        jQuery.noConflict();
-
-$(document).ready(function(){
-    $('.datepicker').datepicker();
-    });
-</script>
-
+            jQuery.noConflict();
+            $(document).ready(function(){
+                $('.dateicker').datepicker();
+            });
+        </script>
     </head>
     
     <body>
@@ -37,15 +33,27 @@ $(document).ready(function(){
                             <li class="dropdown">
                                 <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> 
                                     <i class="icon-user"></i> <?php echo strtoupper($this->session->session_data['username']);?> <i class="caret"></i>
-
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a tabindex="-1" href="#">Profile</a>
+                                        <?php
+                                            $value = 'profile';
+                                            echo anchor('company/'.$value.'', 'Profile');
+                                        ?>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a tabindex="-1" href="login.html">Logout</a>
+                                        <?php
+                                            $value = 'change_password';
+                                            echo anchor('company/'.$value.'', 'Change Password');
+                                        ?>
+                                    </li>
+                                      <li class="divider"></li>
+                                     <li>
+                                        <?php
+                                            $value = 'logout';
+                                            echo anchor('company/'.$value.'', 'Logout');
+                                        ?>
                                     </li>
                                 </ul>
                             </li>
@@ -147,21 +155,6 @@ $(document).ready(function(){
                                             echo anchor('company/'.$value.'', 'View Note');
                                         ?>
                                     </li>
-                                    </ul>
-                                <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Settings <b class="caret"></b></a>
-                                <ul class="dropdown-menu" id="menu1">
-                                     <li>
-                                        <?php
-                                            $value = 'change_password';
-                                            echo anchor('company/'.$value.'', 'Change Password');
-                                        ?>
-                                </li>
-                                  
-                                </ul>
-                            </li>
-
-                            
                                 </ul>
                             </li>
                         </ul>

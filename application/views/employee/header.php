@@ -1,8 +1,7 @@
-<?php ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin Home Page</title>
+        <title>Employee Page</title>
         <!-- Bootstrap -->
         <link rel="icon" href="<?php echo base_url();?>application/assets/images/logo/favicon.png" type="logo/image/gif">
         
@@ -52,7 +51,7 @@ $(document).ready(function(){
                         </ul>
                         <ul class="nav">
                             <li class="active">
-                                <a href="<?php echo base_url('index.php/Login/user/index.php');?>">Dashboard</a>
+                                <a href="<?php echo base_url('/index.php/Login/dashboard');?>">Dashboard</a>
                             </li>
                            
                             <li class="dropdown">
@@ -93,13 +92,18 @@ $(document).ready(function(){
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Ticket <b class="caret"></b></a>
                                 <ul class="dropdown-menu" id="menu1">
-                                     <li>
+                                    <li>
                                         <?php
                                             $value = 'view_ticket';
-                                            echo anchor('employee/'.$value.'', 'View Ticket');
+                                            echo anchor('employee/'.$value.'', 'View Tickets');
                                         ?>
-                                </li>
-                                  
+                                    </li>
+                                    <li>
+                                        <?php
+                                            $value = 'view_own_ticket';
+                                            echo anchor('employee/'.$value.'', 'View Own Tickets');
+                                        ?>
+                                    </li>
                                 </ul>
                             </li>
 

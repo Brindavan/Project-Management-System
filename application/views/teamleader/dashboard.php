@@ -11,7 +11,7 @@ function custom_echo($x, $length)
     echo $y;
   }
 }
-
+//var_dump($this->session->session_data);
 ?>
 <div class="span9" id="content">
     <div class="row-fluid">

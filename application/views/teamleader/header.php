@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin Home Page</title>
+        <title>Team Leader Page</title>
         <!-- Bootstrap -->
         <link rel="icon" href="<?php echo base_url();?>application/assets/images/logo/favicon.png" type="logo/image/gif">
         
@@ -12,6 +12,7 @@
         <script src="<?php echo base_url();?>application/assets/js/company/bootstrap-datepicker.js"></script>
         <script src="<?php echo base_url();?>application/assets/js/company/jquery-1.9.1.min.js"></script>
         <script src="<?php echo base_url();?>application/assets/js/company/bootstrap.min.js"></script>
+        <script src="<?php echo base_url();?>application/assets/js/company/googlejsapi.js"></script>
         
         <script>
         jQuery.noConflict();

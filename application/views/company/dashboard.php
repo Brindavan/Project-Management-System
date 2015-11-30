@@ -1,4 +1,9 @@
 <?php
+    if(isset($this->session->session_data['user_id'])){
+       
+?>
+
+<?php
     foreach ($total_employee as $row) {
         $total_employee=$row->total;
     }
@@ -9,7 +14,7 @@
         $total_project=$row->total;
     }
     //echo $this->session->sessiondata('user_id');
-
+//var_dump($this->session->session_data);
 ?>
 <div class="span9" id="content">
     <div class="row-fluid">
@@ -171,4 +176,10 @@
         </div>
     </div>
 </div>
-           
+<?php
+}
+else{
+        $data['error_message'] = "Please Login First";
+        $this->view->load('login/view',$data);
+    }
+    ?>

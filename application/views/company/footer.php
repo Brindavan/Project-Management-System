@@ -1,6 +1,6 @@
 </div><footer>
 
-                <p>&copy; <?php echo 'Username';//strtolower($username);?> 2015</p>
+                <p>&copy; Project Management System 2015</p>
             </footer>
         </div>
     </body>

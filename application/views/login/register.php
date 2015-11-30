@@ -31,18 +31,19 @@
 		<?php
 			
 			//Form Open 
+			
 			$atrributes = array(
 							'name'		=>'login_form'
 				);
-			echo form_open('Login/dashboard',$atrributes); 
+			echo form_open('Login/newCompany',$atrributes); 
 			echo '<table border="0" cellpadding="0" cellspacing="0">
 					<tr>
-						<th>Username</th>
+						
 						<td>';
 							$data = array(
 				              	'type'		=> 'text',
-				              	'name'        => 'username',
-				              	'placeholder' => 'Username',
+				              	'name'        => 'name',
+				              	'placeholder' => 'Company Name',
 				              	'class'		=> 'login-inp',
 				              	'required' => 'required'
 
@@ -52,12 +53,12 @@
 			        echo '</tr>';
 
 			       echo '<tr>
-						<th>Password</th>
+						
 						<td>';
 							$data = array(
-								'type'		=>'password',
-				              	'name'        => 'password',
-				              	'placeholder' => 'Password',
+								'type'		=>'text',
+				              	'name'        => 'address',
+				              	'placeholder' => 'Address',
 				              	'class'		=> 'login-inp',
 				              	'required' => 'required'
 				            );
@@ -66,17 +67,17 @@
 			        echo '</tr>';
 
 			        echo '<tr>
-						<th></th>
+						
 						<td valign="top">';
 							$data = array(
-								'type'		=>'checkbox',
-								'name'		=>'remember',
-				              	'class'		=> 'checkbox-size',
-				              	'checked'	=>'checked',
-				              	'id'		=> 'login-check'
+								'type'		=>'text',
+								'name'		=>'phone',
+								'placeholder'=>'Phone Number',
+				              	'class'		=> 'login-inp',
+				              	'required' => 'required',
 				            );
 				            echo form_input($data);
-			            echo '<label for="login-check">Remember me</label></td></td>';
+			            
 			        echo '</tr>';
 
 			        echo '<tr>
@@ -84,8 +85,8 @@
 						<td>';
 							$data = array(
 								'type'		=> 'submit',
-								'name'		=> 'Submit',
-								'value'		=> 'Submit',								
+								'name'		=> 'Register',
+								'value'		=> 'Register',								
 				              	'class'		=> 'submit-login'
 				            );
 				            echo form_submit($data);
@@ -97,17 +98,12 @@
 			echo form_close();
 		?>
 	</div>
- 	<!--  end login-inner -->
-	<div class="clear"></div>
-		<a href="index.php/login/register" class="register">Sign Up</a>
-	<div class="clear"></div>
-		<a href="" class="forgot-pwd">forgot Password?</a>
-
-
+ 
  </div>
  <!--  end loginbox -->
 </div>
 <!-- End: login-holder -->
+
 
 </body>
 </html>

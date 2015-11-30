@@ -3,38 +3,45 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('session');
-
+		$this->load->model('login_model');
 	}
 
 	public function index()
 	{
-		//echo 'good';
 		$this->load->view('login/index');
 	}
 
-	public function dashboard(){
-		//echo 'chceking';
-		//echo $this->session->userdata('item');
-		$login = array(
-		'username'		=> $this->input->post('username'),
-		'password'		=> md5($this->input->post('password')),
-		//'remember'		=> 
+	public function register(){
+		$this->load->view('login/register');
+	}
+	public function newCompany(){
+		$company = array(
+				'name' 		=> $this->input->post('name'),
+				'address' 	=> $this->input->post('address'),
+				'phone'		=> $this->input->post('phone'),
 		);
-		//echo $login['username'].'<br>';
-		//echo $login['password'].'<br>';
 		
-		//echo $login['remember'].'<br>';
+		$this->login_model->newCompany($company);
+		echo '<script type="text/javascript">';
+			echo 'alert("Your Account has been created. Both username and password is your company name. You can change your password after.")';
+		echo '</script>';
+		redirect(base_url(),'refresh');	
+	}
 
+	public function dashboard(){
+		$login = array(
+			'username'		=> $this->input->post('username'),
+			'password'		=> md5($this->input->post('password')),
+		);
 		$this->load->model('login_model');
 		$data = $this->login_model->getUserDetails($login);
 		if($data==NULL){
 			$error['error_message'] = "Username doesn't Exist";
+			//var_dump($data);
 			$this->load->view('login/error',$error);
-			//echo $error_message;
 		}
 		else{
 			foreach ($data as $row ) {
@@ -46,11 +53,9 @@ class Login extends CI_Controller {
 					$this->load->view('login/error',$error);
 			}
 			else{
-   				//var_dump($this->session->userdata);
-   				
-				switch ($category) {
+   				switch ($category) {
 					case 'company':
-						$data['sidebar_menu']=array('Menu 1', 'Menu 2');
+						$data['sidebar_menu']=array();
 						$this->load->view('company/header');
 						$this->load->view('company/sidebar',$data);
 						$this->load->model('Company_model');
@@ -60,7 +65,6 @@ class Login extends CI_Controller {
 						$data['total_employee'] =$this->Company_model->getTotalEmployee();
 						$data['total_teamleader'] =$this->Company_model->getTotalTeamleader();
 						$data['total_project'] =$this->Company_model->getTotalProject();
-						
 						$this->load->view('company/dashboard',$data);
 						$this->load->view('company/footer');
 						break;
@@ -75,7 +79,7 @@ class Login extends CI_Controller {
 						$data['task'] = $this->employee_model->getAllTask();
 						$data['note'] = $this->employee_model->getAllNote();
 						$data['ticket'] = $this->employee_model->getAllTicket();
-						$data['sidebar_menu']=array('Menu 1', 'Menu 2');
+						$data['sidebar_menu']=array('Project List','View Task','View Ticket','View Note');
 						$this->load->view('employee/header');
 						$this->load->view('employee/sidebar',$data);
 						$this->load->view('employee/dashboard',$data);
@@ -83,7 +87,6 @@ class Login extends CI_Controller {
 						break;
 
 					case 'teamleader':
-						//echo 'Teamleader';
 						$this->load->model('teamleader_model');
 						$data['project'] = $this->teamleader_model->getProject();
 						$data['note'] = $this->teamleader_model->getNote();
@@ -102,10 +105,7 @@ class Login extends CI_Controller {
 						break;
 				}
 			}
-			
-			//echo $data->username;
 		}
-			//var_dump($data);
 	}
 }
 ?>

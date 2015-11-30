@@ -2,8 +2,8 @@
     <div class="row-fluid">
         <div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4>Welcome</h4>
-            You are in your home-page.
+            <h4>Password</h4>
+            You can change your password here.
         </div>
         	<div class="navbar">
             	<div class="navbar-inner">
@@ -13,12 +13,8 @@
                         <li class="active">
                             Dashboard
                         </li>
-                        <!--
-                        <li>
-                            <a href="#">Settings</a> <span class="divider">/</span>	
-                        </li>
-                        <li class="active">Tools</li>
-                    -->
+                        <span class="divider">/</span> 
+                        <li class="active">Change Password</li>
                     </ul>
             	</div>
         	</div>
@@ -65,7 +61,7 @@
 
                             );
                         echo form_input($data);
-
+                        echo '<br>';
                         $data = array(
                                 'type'      => 'submit',
                                 'name'      => 'Submit',

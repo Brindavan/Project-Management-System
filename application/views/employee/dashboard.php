@@ -1,4 +1,6 @@
+
 <?php
+    //session_start();
     foreach ($total_task as $row) {
         $total_task=$row->total;
     }
@@ -11,7 +13,8 @@
     foreach ($total_project as $row) {
         $total_project=$row->total;
     }
-    //echo $this->session->sessiondata('user_id');
+    //echo $this->session->session_data['user_id'];
+    //var_dump($this->session->session_data);
 
 ?>
 <div class="span9" id="content">
@@ -113,9 +116,12 @@
                             echo '<tr>';
                                 echo '<td>'.$i++.'</td>';
                                 echo '<td>'.$note->title.'</td>';
-                                echo '<td>'.$note->body.'</td>';
+                                echo '<td>'.substr($note->body,0,35).'..</td>';
                                 echo '<td>'.$note->name.'</td>';
-                            echo '</tr>';        
+                            echo '</tr>';
+                            
+                            if($i>3)
+                                break;        
                             }
                         }
                         ?>
@@ -162,7 +168,9 @@
                                 echo '<td>'.$task->task.'</td>';
                                 echo '<td>'.$task->project_name.'</td>';
                                 echo '<td>'.$task->status.'</td>';
-                            echo '</tr>';        
+                            echo '</tr>';
+                            if($i>3)
+                                break;          
                             }
                         }
                         ?>
@@ -182,22 +190,35 @@
                     <div class="pull-right"><span class="badge badge-info"><?php echo $total_ticket;?></span></div>
                 </div>
                 <div class="block-content collapse in">
+                    <table class="table table-striped">
                             <?php 
+                                $i=1;
                                 foreach ($ticket as $row){?>
                                     <div class = "ticket">
                                         <div class = "tickethead">
-                                            <a href="teamleader/ticketDetails/<?php echo $row->id; ?>"><h4><?php echo $row->problem;?></h4></a>
-                                            <div class="clear"></div>
-
-                                            <?php if(strcmp($row->status,"open")==0){ ?>
+                                            <tr>
+                                                <th>
+                                                    <a href="teamleader/ticketDetails/<?php echo $row->id; ?>">
+                                                    <h4><?php echo $row->problem;?></h4></a>
+                                                    <?php if(strcmp($row->status,"open")==0){ ?>
                                                 <div id="open">UnSolved</div>
                                             <?php }else{ ?>
                                                 <div id="close" style="color:red;">Solved</div>
                                             <?php } ?>
+                                                </th>
+                                            </tr>
+                                            <div class="clear"></div>
+
+                                            
                                         </div>
                                      
                                     </div>
-                                <?php } ?>
+                                <?php 
+                                    $i++;
+                                    if($i>3)
+                                        break;  
+                            } ?>
+                    </table>
                 </div>
             </div>
             <!-- /block -->
